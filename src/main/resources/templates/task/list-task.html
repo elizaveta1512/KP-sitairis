@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи</title>
+</head>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.4.1/css/all.css} "/>
+<body>
+<div class="navbar bg-dark">
+    <a th:value="${sprintId}" th:href="@{/tasks/signup/{sprint_id}(sprint_id=${sprintId})}">
+        <button class="btn tn btn-success">Добавить задачу</button>
+    </a>
+    <a th:value="${sprintId}" th:href="@{/tasks/back/{sprint_id}(sprint_id=${sprintId})}">
+        <button class="btn btn btn-warning">Назад к спринтам</button>
+    </a>
+</div>
+<table class="table table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">имя</th>
+        <th scope="col">состояние</th>
+        <th scope="col">приоритет</th>
+        <th scope="col">исполнитель</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.number}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:switch="${task.isDone}">
+            <span th:case="${false}" class="badge badge-pill badge-success">в разработке</span>
+            <span th:case="${true}" class="badge badge-pill badge-dark">завершен</span>
+        </td>
+        <td th:text="${task.priority.name}"></td>
+        <td th:text="${task.employee.name}"></td>
+
+        <td><a th:href="@{/tasks/edit/{id}(id=${task.id})}"
+               class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a></td>
+        <td><a
+                th:href="@{/tasks/delete/{sprint_id}/{id}(sprint_id=${sprintId},id=${task.id})}"
+                class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+</body>
+</html>

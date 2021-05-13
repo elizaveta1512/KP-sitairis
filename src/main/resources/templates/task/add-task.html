@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Добавить задачу</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.4.1/css/all.css} "/>
+</head>
+<body>
+<div class="container my-5">
+    <h3>Добавить задачу</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form action="#" th:value="${sprintId}" th:action="@{/tasks/add/{sprint_id}(sprint_id=${sprintId})}"
+                      th:object="${task}" method="post">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="name" class="col-form-label">Имя</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="name"
+                                   placeholder="Название задачи">
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <input class="col-form-check-input" type="checkbox" name="isDone" value=""
+                                   id="flexCheckChecked" th:field="*{isDone}">
+                            <label class="col-form-check-label" for="flexCheckChecked">
+                                Завершен
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label>Описание задачи:</label><br>
+                            <textarea rows="2" cols="45" th:field="*{description}" id="description"
+                                      name="description"></textarea><br><br>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label>
+                                Приоритет:
+                                <select th:field="*{priority.id}">
+                                    <option th:each="priority : ${priorities}"
+                                            th:value="${priority.id}"
+                                            th:text="${priority.name}">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label>
+                                Исполнитель:
+                                <select th:field="*{employee.id}">
+                                    <option th:each="employee : ${employees}"
+                                            th:value="${employee.id}"
+                                            th:text="${employee.name}">
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Создать задачу</button>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="form-group col-md-8"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

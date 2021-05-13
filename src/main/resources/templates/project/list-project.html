@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Проекты</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.4.1/css/all.css} "/>
+</head>
+<body>
+<div class="container my-2">
+    <div class="card">
+        <div class="card-body">
+            <div th:switch="${projects}" class="container my-5">
+                <p class="my-5">
+                    <a th:href="@{/projects/signup}" class="btn btn-success"><i class="fas fa-user-plus ml-2">Добавить
+                        проект</i></a>
+                </p>
+                <div>
+                    <h2 th:case="null">BA проектов еще нет</h2>
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Описание</th>
+                                <th>Дата создания</th>
+                                <th>Обновить</th>
+                                <th>Удалить</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="project : ${projects}">
+                                <td th:text="${project.identifier}"></td>
+                                <td th:text="${project.description}"></td>
+                                <td th:text="${project.createdDate}"></td>
+
+                                <td><a th:href="@{/projects/edit/{id}(id=${project.id})}"
+                                       class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a
+                                        th:href="@{/projects/delete/{id}(id=${project.id})}"
+                                        class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td>
+                                    <a th:href="@{/sprints/list/{project_id}(project_id=${project.id})}"
+                                       class="btn btn-success">
+                                        <i class="fas fa ml-2">Октрыть спринты</i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
